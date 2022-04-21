@@ -1,0 +1,27 @@
+﻿<Window x:Class="TimeManagement.addEventWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeManagement"
+        mc:Ignorable="d"
+        Title="Adaugă sarcină" Height="450" Width="400" ResizeMode="CanMinimize" Icon="/Icons/To-Do_icon.png" Style="{StaticResource ResourceKey=windowStyle}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <!--TextBlock-->
+        <TextBlock Grid.Row="0" Text="Denumire sarcină" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="2" Text="Conținut sarcină" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+        <!--TextBox-->
+        <TextBox x:Name="name" Grid.Row="1" Style="{StaticResource ResourceKey=textBoxStyle}"/>
+        <TextBox x:Name="description" Grid.Row="3" Height="190" Style="{StaticResource ResourceKey=textBoxStyle}" VerticalContentAlignment="Top"/>
+        <!--Button-->
+        <Button Grid.Row="4" Content="Adaugă sarcină" Style="{StaticResource ResourceKey=buttonStyle}" Click="addEvent_Click"/>
+    </Grid>
+</Window>
