@@ -5,8 +5,90 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeManagement"
         mc:Ignorable="d"
-        Title="Setări" Height="450" Width="800" ResizeMode="CanMinimize" Icon="/Icons/To-Do_icon.png" Style="{StaticResource ResourceKey=windowStyle}">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Setări" Height="450" Width="800" ResizeMode="CanMinimize" Icon="/Icons/To-Do_icon.png" Style="{DynamicResource ResourceKey=windowStyle}">
     <Grid>
-        
+        <TabControl x:Name="tabs" TabStripPlacement="Left">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal" Width="150">
+                        <materialDesign:PackIcon Kind="User" Width="25" Height="25" Style="{DynamicResource ResourceKey=packIconLoginStyle}"/>
+                        <TextBlock Text="Utilizator" VerticalAlignment="Center" FontWeight="Bold" Padding="10 0 0 0" Style="{DynamicResource ResourceKey=calendarEventTextStyle}"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel Orientation="Vertical" Margin="15" CanVerticallyScroll="True">
+                        <TextBlock Text="Nume/Prenume" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                            <TextBox x:Name="name" Width="300" Margin="25 0 0 0" IsEnabled="False" Style="{DynamicResource ResourceKey=MaterialDesignTextBox}"/>
+                            <Button x:Name="modifyName" Click="modifyName_Click" Width="35" Height="35" Style="{DynamicResource ResourceKey=buttonStyle}">
+                                <materialDesign:PackIcon Kind="Pen"/>
+                            </Button>
+                        </StackPanel>
+                        <TextBlock Text="Email" Margin="25 5 0 0" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="email" Width="300" Margin="25 0 0 0" IsEnabled="False" Style="{DynamicResource ResourceKey=MaterialDesignTextBox}"/>
+                            <Button x:Name="modifyEmail" Click="modifyEmail_Click" Width="35" Height="35" Style="{DynamicResource ResourceKey=buttonStyle}">
+                                <materialDesign:PackIcon Kind="Pen"/>
+                            </Button>
+                        </StackPanel>
+                        <TextBlock Text="Password" Margin="25 5 0 0" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <PasswordBox x:Name="password" Width="300" Margin="25 0 0 0" IsEnabled="False" Style="{DynamicResource ResourceKey=MaterialDesignPasswordBox}"/>
+                            <TextBox x:Name="passwordContent" Width="300" Margin="-300 0 0 0" IsEnabled="True" Visibility="Hidden" Style="{DynamicResource ResourceKey=MaterialDesignTextBox}"/>
+                            <Button x:Name="modifyPassword" Click="modifyPassword_Click" Width="35" Height="35" Style="{DynamicResource ResourceKey=buttonStyle}">
+                                <materialDesign:PackIcon Kind="Pen"/>
+                            </Button>
+                        </StackPanel>
+                        <Button x:Name="apply" Margin="25" IsEnabled="False" Style="{DynamicResource ResourceKey=buttonStyle}" Click="apply_Click">
+                            <materialDesign:PackIcon Kind="Check"/>
+                        </Button>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal" Width="150">
+                        <materialDesign:PackIcon Kind="Settings" Width="25" Height="25" Style="{DynamicResource ResourceKey=packIconLoginStyle}"/>
+                        <TextBlock Text="Setări globale" VerticalAlignment="Center" FontWeight="Bold" Padding="10 0 0 0" Style="{DynamicResource ResourceKey=calendarEventTextStyle}"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel Orientation="Vertical" Margin="15" CanVerticallyScroll="True">
+                        <TextBlock Text="Timer de sincronizare (minute)" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                            <TextBox x:Name="timer" Width="300" Margin="25 0 0 0" IsEnabled="False" Style="{DynamicResource ResourceKey=MaterialDesignTextBox}"/>
+                            <Button x:Name="modifyTimer" Click="modifyTimer_Click" Width="35" Height="35" Style="{DynamicResource ResourceKey=buttonStyle}">
+                                <materialDesign:PackIcon Kind="Pen"/>
+                            </Button>
+                            <Button x:Name="applyTimer" Click="applyTimer_Click" IsEnabled="False" Width="35" Height="35" Margin="0" Style="{DynamicResource ResourceKey=buttonStyle}">
+                                <materialDesign:PackIcon Kind="Check"/>
+                            </Button>
+                        </StackPanel>
+                        <TextBlock Text="La câte zile vor fi afișate evenimentele pe dashboard" Margin="25 5 0 0" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                            <TextBox x:Name="endOn" Width="300" Margin="25 0 0 0" IsEnabled="False" Style="{DynamicResource ResourceKey=MaterialDesignTextBox}"/>
+                            <Button x:Name="modifyEnd" Click="modifyEnd_Click" Width="35" Height="35" Style="{DynamicResource ResourceKey=buttonStyle}">
+                                <materialDesign:PackIcon Kind="Pen"/>
+                            </Button>
+                            <Button x:Name="applyEnd" Click="applyEnd_Click" IsEnabled="False" Width="35" Height="35" Margin="0" Style="{DynamicResource ResourceKey=buttonStyle}">
+                                <materialDesign:PackIcon Kind="Check"/>
+                            </Button>
+                        </StackPanel>
+                        <TextBlock Text="Tema" Margin="25 5 0 0" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                            <ComboBox x:Name="theme" SelectedValuePath="Content" Width="300" Margin="25 0 0 0" Style="{DynamicResource ResourceKey=MaterialDesignComboBox}" SelectionChanged="theme_SelectionChanged">
+                                <ComboBoxItem Content="Light"/>
+                                <ComboBoxItem Content="Dark"/>
+                            </ComboBox>
+                            <Button x:Name="applyTheme" Click="applyTheme_Click" IsEnabled="False" Width="35" Height="35" Style="{DynamicResource ResourceKey=buttonStyle}">
+                                <materialDesign:PackIcon Kind="Check"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            
+        </TabControl>
     </Grid>
 </Window>

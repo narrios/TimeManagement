@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeManagement"
         mc:Ignorable="d"
-        Title="Adaugă sarcină" Height="450" Width="400" ResizeMode="CanMinimize" Icon="/Icons/To-Do_icon.png" Style="{StaticResource ResourceKey=windowStyle}">
+        Title="Adaugă sarcină" Height="450" Width="400" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/Icons/To-Do_icon.png" Style="{DynamicResource ResourceKey=windowStyle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -16,12 +16,12 @@
         </Grid.RowDefinitions>
 
         <!--TextBlock-->
-        <TextBlock Grid.Row="0" Text="Denumire sarcină" Style="{StaticResource ResourceKey=textBlockStyle}"/>
-        <TextBlock Grid.Row="2" Text="Conținut sarcină" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="0" Text="Denumire sarcină" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="2" Text="Conținut sarcină" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
         <!--TextBox-->
-        <TextBox x:Name="name" Grid.Row="1" Style="{StaticResource ResourceKey=textBoxStyle}"/>
-        <TextBox x:Name="description" Grid.Row="3" Height="190" Style="{StaticResource ResourceKey=textBoxStyle}" VerticalContentAlignment="Top"/>
+        <TextBox x:Name="name" Grid.Row="1" Style="{DynamicResource ResourceKey=textBoxStyle}"/>
+        <TextBox x:Name="description" Grid.Row="3" Height="190" Style="{DynamicResource ResourceKey=textBoxStyle}" VerticalContentAlignment="Top"/>
         <!--Button-->
-        <Button Grid.Row="4" Content="Adaugă sarcină" Style="{StaticResource ResourceKey=buttonStyle}" Click="addEvent_Click"/>
+        <Button Grid.Row="4" Content="Adaugă sarcină" Style="{DynamicResource ResourceKey=buttonStyle}" Click="addEvent_Click"/>
     </Grid>
 </Window>

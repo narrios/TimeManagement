@@ -19,11 +19,13 @@ namespace TimeManagement
     /// </summary>
     public partial class messageBox : Window
     {
-        public messageBox(string title, string message)
+        public messageBox(string title, string message, string type)
         {
             InitializeComponent();
             this.Title = title;
             this.message.Text = message;
+            if (type == "Ok") { buttonOk.Visibility = Visibility.Visible; buttonNo.Visibility = Visibility.Hidden; buttonYes.Visibility = Visibility.Hidden; }
+            else { buttonOk.Visibility = Visibility.Hidden; buttonNo.Visibility = Visibility.Visible; buttonYes.Visibility = Visibility.Visible; }
         }
 
         private void buttonNo_Click(object sender, RoutedEventArgs e)
@@ -33,8 +35,13 @@ namespace TimeManagement
 
         private void buttonYes_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow main = Owner as mainWindow;
-            main.MessageBoxResult = 1;
+            /*mainWindow main = Owner as mainWindow;
+            main.MessageBoxResult = 1;*/
+            Close();
+        }
+
+        private void buttonOk_Click(object sender, RoutedEventArgs e)
+        {
             Close();
         }
     }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TimeManagement"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="To Do" Height="600" Width="1000" MinHeight="600" MinWidth="600" Icon="/Icons/To-Do_icon.png" Style="{StaticResource ResourceKey=windowStyle}" Closing="onClose">
+        Title="To Do" Height="600" Width="1000" MinHeight="600" MinWidth="600" Icon="/Icons/To-Do_icon.png" WindowStartupLocation="CenterScreen" Style="{DynamicResource ResourceKey=windowStyle}" Closing="onClose">
 
     <Window.Resources>
         <Storyboard x:Key="MenuOpen">
@@ -38,18 +38,18 @@
         </Storyboard>
 
         <DataTemplate x:Key="eventsTemplate">
-            <Button Style="{StaticResource ResourceKey=dashButtonStyle}" Click="updateEventButton_Click">
+            <Button Style="{DynamicResource ResourceKey=dashButtonStyle}" Click="updateEventButton_Click">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" Margin="0 0 10 5" HorizontalAlignment="Right" x:Name="timeToShow">
-                        <TextBlock DockPanel.Dock="Right" Text="{Binding Path=End}" FontWeight="DemiBold" Style="{StaticResource ResourceKey=dashTextStyle}"/>
-                        <TextBlock DockPanel.Dock="Left" Text="{Binding  Path=Start}" FontWeight="DemiBold" Style="{StaticResource ResourceKey=dashTextStyle}"/>
-                        <TextBlock HorizontalAlignment="Center" FontWeight="DemiBold" Style="{StaticResource ResourceKey=dashTextStyle}">-</TextBlock>
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Path=End}" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}"/>
+                        <TextBlock DockPanel.Dock="Left" Text="{Binding  Path=Start}" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}"/>
+                        <TextBlock HorizontalAlignment="Center" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}">-</TextBlock>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Alarm" Style="{StaticResource ResourceKey=dashPackIconStyle}"/>
+                        <materialDesign:PackIcon Kind="Alarm" Style="{DynamicResource ResourceKey=dashPackIconStyle}"/>
                         <StackPanel VerticalAlignment="Top" Margin="0 12.5 0 0">
-                            <TextBlock VerticalAlignment="Center" FontWeight="Bold" Style="{StaticResource ResourceKey=dashTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Name}"/>
-                            <TextBlock FontSize="12" VerticalAlignment="Center" FontWeight="DemiBold" Style="{StaticResource ResourceKey=dashTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Description}"/>
+                            <TextBlock VerticalAlignment="Center" FontWeight="Bold" Style="{DynamicResource ResourceKey=dashTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Name}"/>
+                            <TextBlock FontSize="12" VerticalAlignment="Center" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Description}"/>
                         </StackPanel>
                     </StackPanel>
                     <TextBlock Visibility="Collapsed" Text="{Binding Path=Id}"/>
@@ -62,18 +62,18 @@
             </DataTemplate.Triggers>
         </DataTemplate>
         <DataTemplate x:Key="endedEventsTemplate">
-            <Button Style="{StaticResource ResourceKey=dashButtonStyle}">
+            <Button Style="{DynamicResource ResourceKey=dashButtonStyle}">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" Margin="0 0 10 5" HorizontalAlignment="Right" x:Name="timeToShow">
-                        <TextBlock DockPanel.Dock="Right" Text="{Binding Path=End}" FontWeight="DemiBold" Style="{StaticResource ResourceKey=dashTextStyle}"/>
-                        <TextBlock DockPanel.Dock="Left" Text="{Binding  Path=Start}" FontWeight="DemiBold" Style="{StaticResource ResourceKey=dashTextStyle}"/>
-                        <TextBlock HorizontalAlignment="Center" FontWeight="DemiBold" Style="{StaticResource ResourceKey=dashTextStyle}">-</TextBlock>
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Path=End}" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}"/>
+                        <TextBlock DockPanel.Dock="Left" Text="{Binding  Path=Start}" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}"/>
+                        <TextBlock HorizontalAlignment="Center" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}">-</TextBlock>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Alarm" Style="{StaticResource ResourceKey=dashPackIconStyle}"/>
+                        <materialDesign:PackIcon Kind="Alarm" Style="{DynamicResource ResourceKey=dashPackIconStyle}"/>
                         <StackPanel VerticalAlignment="Top" Margin="0 12.5 0 0">
-                            <TextBlock VerticalAlignment="Center" FontWeight="Bold" Style="{StaticResource ResourceKey=dashTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Name}"/>
-                            <TextBlock FontSize="12" VerticalAlignment="Center" FontWeight="DemiBold" Style="{StaticResource ResourceKey=dashTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Description}"/>
+                            <TextBlock VerticalAlignment="Center" FontWeight="Bold" Style="{DynamicResource ResourceKey=dashTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Name}"/>
+                            <TextBlock FontSize="12" VerticalAlignment="Center" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Description}"/>
                         </StackPanel>
                     </StackPanel>
                 </DockPanel>
@@ -88,14 +88,14 @@
             <Button Background="Transparent" HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,1" Width="320" Height="Auto" BorderBrush="Coral" Padding="0,7" Click="updateEventsFromCalendar_Click">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0 0 10 0" x:Name="timeToShow">
-                        <TextBlock DockPanel.Dock="Right" Text="{Binding Path=End}" Style="{StaticResource ResourceKey=calendarEventTextStyle}"/>
-                        <TextBlock DockPanel.Dock="Left" Text="{Binding Path=Start}" Style="{StaticResource ResourceKey=calendarEventTextStyle}"/>
-                        <Label VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 -4.5 0 0" Style="{StaticResource ResourceKey=calendarEventLabelStyle}">-</Label>
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Path=End}" Style="{DynamicResource ResourceKey=calendarEventTextStyle}"/>
+                        <TextBlock DockPanel.Dock="Left" Text="{Binding Path=Start}" Style="{DynamicResource ResourceKey=calendarEventTextStyle}"/>
+                        <Label VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 -4.5 0 0" Style="{DynamicResource ResourceKey=calendarEventLabelStyle}">-</Label>
                     </DockPanel>
-                    <materialDesign:PackIcon Kind="Alarm" Width="40" Height="40" VerticalAlignment="Top" Margin="0 5 10 0" Style="{StaticResource ResourceKey=rightMenuPackIconStyle}"/>
+                    <materialDesign:PackIcon Kind="Alarm" Width="40" Height="40" VerticalAlignment="Top" Margin="0 5 10 0" Style="{DynamicResource ResourceKey=rightMenuPackIconStyle}"/>
                     <StackPanel>
-                        <TextBlock VerticalAlignment="Center" Style="{StaticResource ResourceKey=calendarEventTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Name}"/>
-                        <TextBlock FontSize="12" VerticalAlignment="Center" Style="{StaticResource ResourceKey=calendarEventTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Description}"/>
+                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource ResourceKey=calendarEventTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Name}"/>
+                        <TextBlock FontSize="12" VerticalAlignment="Center" Style="{DynamicResource ResourceKey=calendarEventTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Description}"/>
                     </StackPanel>
                     <TextBlock Visibility="Collapsed" Text="{Binding Path=Id}"/>
                 </DockPanel>
@@ -108,17 +108,17 @@
 
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="openMenuButton">
-            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+            <BeginStoryboard Storyboard="{DynamicResource MenuOpen}"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="closeMenuButton">
-            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+            <BeginStoryboard Storyboard="{DynamicResource MenuClose}"/>
         </EventTrigger>
 
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="openRightMenuButton">
-            <BeginStoryboard Storyboard="{StaticResource RightMenuOpen}"/>
+            <BeginStoryboard Storyboard="{DynamicResource RightMenuOpen}"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="closeRightMenuButton">
-            <BeginStoryboard Storyboard="{StaticResource RightMenuClose}"/>
+            <BeginStoryboard Storyboard="{DynamicResource RightMenuClose}"/>
         </EventTrigger>
     </Window.Triggers>
 
@@ -127,7 +127,7 @@
             <ColumnDefinition Width="281*"/>
             <ColumnDefinition Width="719*"/>
         </Grid.ColumnDefinitions>
-        <TabControl x:Name="tabs" Margin="60,0,0,0" Grid.ColumnSpan="2" Style="{StaticResource ResourceKey=tabControlStyle}">
+        <TabControl x:Name="tabs" Margin="60,0,0,0" Grid.ColumnSpan="2" Style="{DynamicResource ResourceKey=tabControlStyle}">
             <TabItem x:Name="dashboard" Visibility="Hidden">
                 <TabItem.Header>Dash</TabItem.Header>
                 <!--Fereastra sarcinilor fara termen sau a sarcinilor pentru ziua curenta-->
@@ -138,7 +138,7 @@
                             <ListBox x:Name="timeEvents" Height="auto" Background="{x:Null}" ItemsPanel="{DynamicResource eventsPanelTemplate}" ItemTemplate="{DynamicResource eventsTemplate}"/>
                         </StackPanel>
                         <Button Click="addEventButton_Click" MouseRightButtonDown="expandEventButton_MouseRightClick" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="45" Height="45" Margin="15" Style="{StaticResource ResourceKey=buttonStyle}">
-                            <materialDesign:PackIcon Kind="PlusBold" Width="20" Height="20" Style="{StaticResource ResourceKey=packIconStyle}"/>
+                            <materialDesign:PackIcon Kind="PlusBold" Width="20" Height="20" Style="{DynamicResource ResourceKey=packIconStyle}"/>
                         </Button>
                     </Grid>
                 </TabItem.Content>
@@ -150,7 +150,7 @@
                     <Grid>
                         <ListBox x:Name="timeEvents1" Height="auto" Background="{x:Null}" ItemsPanel="{DynamicResource eventsPanelTemplate}" ItemTemplate="{DynamicResource endedEventsTemplate}"/>
                         <Button Click="addEventButton_Click" MouseRightButtonDown="expandEventButton_MouseRightClick" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="45" Height="45" Margin="15" Style="{StaticResource ResourceKey=buttonStyle}">
-                            <materialDesign:PackIcon Kind="PlusBold" Width="20" Height="20" Style="{StaticResource ResourceKey=packIconStyle}"/>
+                            <materialDesign:PackIcon Kind="PlusBold" Width="20" Height="20" Style="{DynamicResource ResourceKey=packIconStyle}"/>
                         </Button>
                     </Grid>
                 </TabItem.Content>
@@ -164,7 +164,7 @@
                         <Calendar x:Name="cal" Margin="-10 -10 50 -10" Language="ro" SelectedDatesChanged="selectedDateChanged"/>
                         <Border x:Name="calContainer" Visibility="Collapsed" Background="Black" Opacity="0.3" Margin="-6, -10, 0, 0"/>
                         <!--Meniul din partea dreapta-->
-                        <Grid x:Name="RightGridMenu" HorizontalAlignment="Right" Margin=" 0, -10, 0, 0" Style="{StaticResource ResourceKey=rightMenuStyle}">
+                        <Grid x:Name="RightGridMenu" HorizontalAlignment="Right" Margin=" 0, -10, 0, 0" Style="{DynamicResource ResourceKey=rightMenuStyle}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="40"/>
                                 <ColumnDefinition/>
@@ -173,10 +173,10 @@
                             <ListBox  x:Name="eventsFromDate" Grid.Column="1" Margin="0,15,10,10" HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{DynamicResource eventsCalendarTemplate}"/>
                             <!--Buton deschidere/inchidere meniu din dreapta-->
                             <Button x:Name="closeRightMenuButton" Grid.Column="0" Click="CloseRightMenuButton_Click" Height="50" Width="50" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed">
-                                <materialDesign:PackIcon Kind="ArrowRight" Height="20" Width="20" Style="{StaticResource ResourceKey=rightMenuPackIconStyle}"/>
+                                <materialDesign:PackIcon Kind="ArrowRight" Height="20" Width="20" Style="{DynamicResource ResourceKey=rightMenuPackIconStyle}"/>
                             </Button>
                             <Button x:Name="openRightMenuButton" Grid.Column="0" Click="OpenRightMenuButton_Click" Height="50" Width="50" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                <materialDesign:PackIcon Kind="Menu" Height="25" Width="25" Style="{StaticResource ResourceKey=rightMenuPackIconStyle}"/>
+                                <materialDesign:PackIcon Kind="Menu" Height="25" Width="25" Style="{DynamicResource ResourceKey=rightMenuPackIconStyle}"/>
                             </Button>
                             <!---->
                         </Grid>
@@ -187,16 +187,16 @@
 
         <!--Bara de sus-->
         <Grid Height="50" VerticalAlignment="Top" Background="DarkRed" Grid.ColumnSpan="2">
-            <TextBlock x:Name="tabName" Text="Sarcini" Margin="85 0" FlowDirection="LeftToRight" VerticalAlignment="Center" FontWeight="Bold" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+            <TextBlock x:Name="tabName" Text="Sarcini" Margin="85 0" FlowDirection="LeftToRight" VerticalAlignment="Center" FontWeight="Bold" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                <TextBlock x:Name="accountName" Text="" FlowDirection="RightToLeft" VerticalAlignment="Center" FontWeight="Light" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+                <TextBlock x:Name="accountName" Text="" FlowDirection="RightToLeft" VerticalAlignment="Center" FontWeight="Light" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
                 <materialDesign:PopupBox HorizontalAlignment="Right" Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Foreground="White">
                     <StackPanel Width="150">
-                        <Button Content="Account"/>
+                        <Button Content="Account" Click="openAccount_Click"/>
                         <Button Content="Setări" Click="openSettings_Click"/>
                         <Button Content="Despre"/>
                         <Separator/>
-                        <Button Content="Delogare"/>
+                        <Button Content="Delogare" Click="unlogin_Click"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
@@ -219,28 +219,28 @@
                     <Button Click="openDashboard_Click" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
                             <materialDesign:PackIcon Kind="ViewDashboard" Foreground="White" VerticalAlignment="Center" Margin="-3 0 15 0" Height="30" Width="30"/>
-                            <TextBlock Text="Sarcini" Foreground="White" FontWeight="Regular" VerticalAlignment="Center" Margin="0 10" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+                            <TextBlock Text="Sarcini" Foreground="White" FontWeight="Regular" VerticalAlignment="Center" Margin="0 10" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
                         </StackPanel>
                     </Button>
                     <!--Buton deschidere a ferestrei sarcini terminate-->
                     <Button Click="openEndedEventsDashboard_Click" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
                             <materialDesign:PackIcon Kind="Timelapse" Foreground="White" VerticalAlignment="Center" Margin="-3 0 15 0" Height="30" Width="30"/>
-                            <TextBlock Text="Sarcini finalizate" Foreground="White" FontWeight="Regular" VerticalAlignment="Center" Margin="0 10" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+                            <TextBlock Text="Sarcini finalizate" Foreground="White" FontWeight="Regular" VerticalAlignment="Center" Margin="0 10" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
                         </StackPanel>
                     </Button>
                     <!--Buton deschidere calendar-->
                     <Button Click="openCalendar_Click" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
                             <materialDesign:PackIcon Kind="Calendar" Foreground="White" VerticalAlignment="Center" Margin="-3 0 15 0" Height="30" Width="30"/>
-                            <TextBlock Text="Calendar" Foreground="White" FontWeight="Regular" VerticalAlignment="Center" Margin="0 10" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+                            <TextBlock Text="Calendar" Foreground="White" FontWeight="Regular" VerticalAlignment="Center" Margin="0 10" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
                         </StackPanel>
                     </Button>
                     <!--Buton sincronizare-->
                     <Button x:Name="syncButton" Height="60" IsEnabled="False" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Click="sync_Click">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
                             <materialDesign:PackIcon Kind="Update" Foreground="White" VerticalAlignment="Center" Margin="-3 0 15 0" Height="30" Width="30"/>
-                            <TextBlock Text="Sincronizare" Foreground="White" FontWeight="Regular" VerticalAlignment="Center" Margin="0 10" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+                            <TextBlock Text="Sincronizare" Foreground="White" FontWeight="Regular" VerticalAlignment="Center" Margin="0 10" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>

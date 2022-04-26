@@ -5,6 +5,7 @@ using System.Data.Linq;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using TimeManagement.Classes;
 
 namespace TimeManagement
@@ -14,8 +15,7 @@ namespace TimeManagement
     /// </summary>
     public partial class mainWindow : Window
     {
-        public int EndOn = 7;
-        public int MessageBoxResult = 0;
+        public DispatcherTimer timer = new DispatcherTimer();
         public ObservableCollection<DisplayEvent> displayEvents = new ObservableCollection<DisplayEvent>();
         public ObservableCollection<DisplayEvent> displayEndedEvents = new ObservableCollection<DisplayEvent>();
         public ObservableCollection<DisplayEvent> calendarEvents = new ObservableCollection<DisplayEvent>();
@@ -27,6 +27,7 @@ namespace TimeManagement
         public Table<DB.EndedEvents> eevents;
         public Table<LocalEvents> levents;
         public Table<LocalEndedEvents> leevents;
+        public Settings setare;
         public DB.Users user;
 
         public mainWindow(DB.Users user)
@@ -46,6 +47,10 @@ namespace TimeManagement
                 accountName.Text = "Guest";
             }
 
+            timer.Interval = new TimeSpan(0, setare.Timer, 0);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
             refreshLocalDatabase();
 
             refreshDashboard();
@@ -60,6 +65,13 @@ namespace TimeManagement
             eevents = mf.MainDB.GetTable<DB.EndedEvents>();
             levents = mf.DB.GetTable<LocalEvents>();
             leevents = mf.DB.GetTable<LocalEndedEvents>();
+            setare = mf.DB.GetTable<Settings>().Where(x => x.Id == 1).First();
+        }
+        public void refreshDash()
+        {
+            refreshData();
+            refreshDashboard();
+            refreshEndedEventsDashboard();
         }
         //=============================Stergerea datelor din baza de date locala si preluarea acestora din baza de date globala=============================//
         public void refreshLocalDatabase()
@@ -78,7 +90,7 @@ namespace TimeManagement
                 {
                     LocalEvents n = new LocalEvents
                     {
-                        LocalEventId = eventNet.EventId,
+                        EventId = eventNet.EventId,
                         EventName = eventNet.EventName,
                         EventDescription = eventNet.EventDescription,
                         EventStart = eventNet.EventStart,
@@ -90,7 +102,7 @@ namespace TimeManagement
                 {
                     LocalEndedEvents n = new LocalEndedEvents
                     {
-                        LocalEndedEventId = eventNet.EndedEventId,
+                        EndedEventId = eventNet.EndedEventId,
                         EventName = eventNet.EventName,
                         EventDescription = eventNet.EventDescription,
                         EventStart = eventNet.EventStart,
@@ -128,30 +140,83 @@ namespace TimeManagement
             if (syncButton.IsEnabled == true)
             {
                 addEndedEvents();
+
+                //Sincronizarea evenimentelor 
                 refreshData();
+                foreach (var localEvent in levents)
+                {
+                    //Modificarea evenimentelor
+                    DB.Events updateEvent = events.FirstOrDefault(ev => ev.EventId == localEvent.EventId);
+                    if (updateEvent != null)
+                    {
+                        updateEvent.EventName = localEvent.EventName;
+                        updateEvent.EventDescription = localEvent.EventDescription;
+                        updateEvent.EventStart = localEvent.EventStart;
+                        updateEvent.EventEnd = localEvent.EventEnd;
+                    }
+                    else
+                    {
+                        //Adaugarea evenimentelor noi
+                        DB.Events ev = new DB.Events
+                        {
+                            UserId = user.UserId,
+                            EventName = localEvent.EventName,
+                            EventDescription = localEvent.EventDescription,
+                            EventStart = localEvent.EventStart,
+                            EventEnd = localEvent.EventEnd,
+                        };
 
-                foreach (var e in events.Where(e => e.UserId.Equals(user.UserId)))
-                {
-                    events.DeleteOnSubmit(e);
+                        events.InsertOnSubmit(ev);
+                    }
                 }
-                foreach (var e in eevents.Where(e => e.UserId.Equals(user.UserId)))
+                //Stergerea evenimentelor
+                for (int i = events.ToList().Count - 1; i >= 0; i--)
                 {
-                    eevents.DeleteOnSubmit(e);
+                    int id = events.ToList()[i].EventId;
+                    if (levents.FirstOrDefault(ev => ev.EventId == id) == null)
+                    {
+                        events.DeleteOnSubmit(events.ToList()[i]);
+                    }
                 }
-                foreach (var e in levents)
+                //Sincronizarea evenimentelor ne actuale
+                foreach (var localEndedEvent in leevents)
                 {
-                    DB.Events x = new DB.Events() { EventName = e.EventName, EventDescription = e.EventDescription, EventStart = e.EventStart, EventEnd = e.EventEnd, UserId = user.UserId };
-                    events.InsertOnSubmit(x);
-                }
-                foreach (var e in leevents)
-                {
-                    DB.EndedEvents x = new DB.EndedEvents() { EventName = e.EventName, EventDescription = e.EventDescription, EventStart = e.EventStart, EventEnd = e.EventEnd, UserId = user.UserId };
-                    eevents.InsertOnSubmit(x);
-                }
+                    //Modificarea evenimentelor
+                    DB.EndedEvents updateEndedEvent = eevents.FirstOrDefault(ev => ev.EndedEventId == localEndedEvent.EndedEventId);
+                    if (updateEndedEvent != null)
+                    {
+                        updateEndedEvent.EventName = localEndedEvent.EventName;
+                        updateEndedEvent.EventDescription = localEndedEvent.EventDescription;
+                        updateEndedEvent.EventStart = localEndedEvent.EventStart;
+                        updateEndedEvent.EventEnd = localEndedEvent.EventEnd;
+                    }
+                    else
+                    {
+                        //Adaugarea evenimentelor noi
+                        DB.EndedEvents ev = new DB.EndedEvents
+                        {
+                            UserId = user.UserId,
+                            EventName = localEndedEvent.EventName,
+                            EventDescription = localEndedEvent.EventDescription,
+                            EventStart = localEndedEvent.EventStart,
+                            EventEnd = localEndedEvent.EventEnd,
+                        };
 
+                        eevents.InsertOnSubmit(ev);
+                    }
+                }
+                //Stergerea evenimentelor
+                for (int i = eevents.ToList().Count - 1; i >= 0; i--)
+                {
+                    int id = eevents.ToList()[i].EndedEventId;
+                    if (leevents.FirstOrDefault(ev => ev.EndedEventId == id) == null)
+                    {
+                        eevents.DeleteOnSubmit(eevents.ToList()[i]);
+                    }
+                }
+                //Salvare modificari din baza de date 
+                mf.DB.SubmitChanges();
                 mf.MainDB.SubmitChanges();
-                refreshDashboard();
-                refreshEndedEventsDashboard();
                 syncButton.IsEnabled = false;
             }
         }
@@ -160,7 +225,7 @@ namespace TimeManagement
         {
             refreshData();
             displayEvents.Clear();
-            List<LocalEvents> Events3Days = levents.Where(e => e.EventEnd <= DateTime.Now.AddDays(EndOn) || e.EventEnd == null).ToList();
+            List<LocalEvents> Events3Days = levents.Where(e => e.EventEnd <= DateTime.Now.AddDays(setare.EndOn) || e.EventEnd == null).ToList();
             foreach (LocalEvents e in Events3Days)
             {
                 bool show = e.EventStart != null;
@@ -189,7 +254,7 @@ namespace TimeManagement
         {
             refreshData();
             displayEndedEvents.Clear();
-            List<LocalEndedEvents> Events3Days = leevents.Where(e => e.EventEnd <= DateTime.Now.AddDays(EndOn) || e.EventEnd == null).ToList();
+            List<LocalEndedEvents> Events3Days = leevents.Where(e => e.EventEnd <= DateTime.Now.AddDays(setare.EndOn) || e.EventEnd == null).ToList();
             foreach (LocalEndedEvents e in Events3Days)
             {
                 string time1 = "", time2 = "";
@@ -267,7 +332,16 @@ namespace TimeManagement
             refreshDashboard();
             refreshEndedEventsDashboard();
         }
-
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if(syncButton.IsEnabled == true)
+            {
+                sync();
+                refreshData();
+                refreshDashboard();
+                refreshEndedEventsDashboard();
+            }  
+        }
         //=============================Adaugarea unei sarcini simple la apasarea butonului respectiv=============================//
         private void addEventButton_Click(object sender, RoutedEventArgs e)
         {
@@ -348,11 +422,31 @@ namespace TimeManagement
             tabName.Text = "Calendar";
         }
         //=============================Butoanele de pe bara de sus=============================//
-        private void openSettings_Click(object sender, RoutedEventArgs e)
+        private void openAccount_Click(object sender, RoutedEventArgs e)
         {
-            settingsWindow settings = new settingsWindow();
+            settingsWindow settings = new settingsWindow(user)
+            {
+                Owner = this,
+            };
+            settings.tabs.SelectedIndex = 0;
             settings.ShowDialog();
         }
+        private void openSettings_Click(object sender, RoutedEventArgs e)
+        {
+            settingsWindow settings = new settingsWindow(user)
+            {
+                Owner = this,
+            };
+            settings.tabs.SelectedIndex = 1;
+            settings.ShowDialog();
+        }
+        private void unlogin_Click(object sender, RoutedEventArgs e)
+        {
+            startWindow start = new startWindow();
+            start.Show();
+            Close();
+        }
+        
         //=============================Alte functii=============================//
         private void selectedDateChanged(object sender, SelectionChangedEventArgs e)
         {

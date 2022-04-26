@@ -28,12 +28,24 @@ namespace TimeManagement
                 addButton.Content = "Adaugă detalii sarcină";
                 deleteButton.Visibility = Visibility.Visible;
             }
+            else
+            {
+                startDatePicker.SelectedDate = DateTime.Now;
+                endDatePicker.SelectedDate = DateTime.Now;
+                startTimePicker.SelectedTime = DateTime.MinValue;
+                endTimePicker.SelectedTime = DateTime.MinValue;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             mainWindow main = Owner as mainWindow;
-            if (name.Text != "" && description.Text != "" && startDatePicker.SelectedDate != null && startTimePicker.SelectedTime != null && endDatePicker.SelectedDate != null && endTimePicker.SelectedTime != null)
+            if(endDatePicker.SelectedDate < DateTime.Now)
+            {
+                messageBox message = new messageBox("Atenție", "Nu puteți crea o sarcină cu termenul deja finalizat", "Ok");
+                message.ShowDialog();
+            }
+            else if (name.Text != "" && description.Text != "" && startDatePicker.SelectedDate != null && startTimePicker.SelectedTime != null && endDatePicker.SelectedDate != null && endDatePicker.SelectedDate >= DateTime.Now && endTimePicker.SelectedTime != null)
             {
                 DateTime d1 = startDatePicker.SelectedDate.Value.Add(startTimePicker.SelectedTime.Value.TimeOfDay);
                 DateTime d2 = endDatePicker.SelectedDate.Value.Add(endTimePicker.SelectedTime.Value.TimeOfDay);
@@ -60,7 +72,7 @@ namespace TimeManagement
                     main.mf.DB.SubmitChanges();
                 }
                 if (main.user != null) main.syncButton.IsEnabled = true;
-                main.refreshData();
+                main.refreshDash();
                 Close();
             }
         }
@@ -70,8 +82,18 @@ namespace TimeManagement
             main.levents.DeleteOnSubmit(updateEvent);
             main.mf.DB.SubmitChanges();
             if (main.user != null) main.syncButton.IsEnabled = true;
-            main.refreshData();
+            main.refreshDash();
             Close();
+        }
+
+        private void endDatePicker_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if(startDatePicker.SelectedDate > endDatePicker.SelectedDate) startDatePicker.SelectedDate = endDatePicker.SelectedDate;
+        }
+
+        private void endTimePicker_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            if(startDatePicker.SelectedDate == endDatePicker.SelectedDate && startTimePicker.SelectedTime > endTimePicker.SelectedTime) startTimePicker.SelectedTime = endTimePicker.SelectedTime;
         }
     }
 }

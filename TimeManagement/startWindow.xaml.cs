@@ -1,4 +1,5 @@
-﻿using System.Data.Linq;
+﻿using System;
+using System.Data.Linq;
 using System.Linq;
 using System.Windows;
 using TimeManagement.Classes;
@@ -11,7 +12,6 @@ namespace TimeManagement
     public partial class startWindow : Window
     {
         mainFunctions mf = new mainFunctions();
-        Table<DB.Users> utilizatori;
         Table<LocalUser> localuser;
         LocalUser user;
 
@@ -19,18 +19,28 @@ namespace TimeManagement
         {
             InitializeComponent();
             mf.connectDBs();
-            utilizatori = mf.MainDB.GetTable<DB.Users>();
             localuser = mf.DB.GetTable<LocalUser>();
+            Settings setare = (mf.DB.GetTable<Settings>()).Where(x => x.Id == 1).First();
             user = (from x in localuser where x.LocalUserId.Equals(1) select x).FirstOrDefault();
-            if (user != null)
+
+            mf.changeTheme(setare);
+
+            if(user != null && (mf.MainDB.GetTable<DB.Users>()) != null)
             {
-                fastLog.Text = "Intră ca " + user.UserName;
-                fastLogButton.IsEnabled = true;
-            }
-            else
-            {
-                fastLog.Text = "Nu ai fost logat încă";
-                fastLogButton.IsEnabled = false;
+                if (user.UserName != ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Name)
+                {
+                    user.UserName = ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Name;
+                }
+                if (user != null && user.Email == ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Email && user.Password == ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Password)
+                {
+                    fastLog.Text = "Intră ca " + user.UserName;
+                    fastLogButton.IsEnabled = true;
+                }
+                else
+                {
+                    fastLog.Text = "Nu ai fost logat încă";
+                    fastLogButton.IsEnabled = false;
+                }
             }
         }
         private void login_Click(object sender, RoutedEventArgs e)
@@ -53,10 +63,18 @@ namespace TimeManagement
 
         private void fastLog_Click(object sender, RoutedEventArgs e)
         {
-            DB.Users User = (from ev in utilizatori where ev.Email == user.Email && ev.Password == user.Password select ev).First();
-            mainWindow main = new mainWindow(User);
-            Close();
-            main.Show();
+            try
+            {
+                DB.Users User = (from ev in (mf.MainDB.GetTable<DB.Users>()) where ev.Email == user.Email && ev.Password == user.Password select ev).FirstOrDefault();
+                mainWindow main = new mainWindow(User);
+                Close();
+                main.Show();
+            }
+            catch(Exception)
+            {
+                messageBox message = new messageBox("Atenție", "La moment nu aveți acces la rețea", "Ok");
+                message.ShowDialog();
+            }
         }
 
         private void guest_Click(object sender, RoutedEventArgs e)

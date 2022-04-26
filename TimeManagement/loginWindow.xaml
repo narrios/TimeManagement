@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TimeManagement"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="To Do" Height="450" Width="350" ResizeMode="CanMinimize" Icon="/Icons/To-Do_icon.png" Style="{StaticResource ResourceKey=windowStyle}">
+        Title="To Do" Height="450" Width="350" ResizeMode="CanMinimize" Icon="/Icons/To-Do_icon.png" Style="{DynamicResource ResourceKey=windowStyle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="110"/>
@@ -20,29 +20,29 @@
         </Grid.RowDefinitions>
 
         <!--Button-->
-        <Button Grid.Row="6" Click="login_Click" Content="Logare" Style="{StaticResource ResourceKey=buttonStyle}"/>
+        <Button Grid.Row="6" Click="login_Click" Content="Logare" Style="{DynamicResource ResourceKey=buttonStyle}"/>
         <!--TextBlock-->
-        <TextBlock Grid.Row="1" Text="Email" Style="{StaticResource ResourceKey=textBlockStyle}"/>
-        <TextBlock Grid.Row="3" Text="Parola" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="1" Text="Email" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="3" Text="Parola" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="25 0">
             <CheckBox x:Name="memorizecheck" VerticalAlignment="Center"/>
-            <TextBlock Text="Memorizează contul" VerticalAlignment="Center" Margin="10 0" Style="{StaticResource ResourceKey=textBlockStyle}"/>
+            <TextBlock Text="Memorizează contul" VerticalAlignment="Center" Margin="10 0" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
         </StackPanel>
-        <TextBlock Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="ExtraLight" FontSize="14" Style="{StaticResource ResourceKey=textBlockStyle }">
+        <TextBlock Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="ExtraLight" FontSize="14" Style="{DynamicResource ResourceKey=textBlockStyle }">
             <Hyperlink Click="goToSign_Click">Nu ești înregistrat? Înregistrare</Hyperlink>
         </TextBlock>
         <!--TextBox-->
         <StackPanel Grid.Row="2">
             <Label x:Name="error" Margin="0,-12,25,0" Padding="0,0,0,2" FontSize="10" Visibility="Hidden" Foreground="DarkRed" HorizontalAlignment="Right">Login sau parola incorecte</Label>
-            <TextBox x:Name="email" Style="{StaticResource ResourceKey=textBoxStyle}" TextChanged="email_TextChanged"/>
+            <TextBox x:Name="email" Style="{DynamicResource ResourceKey=textBoxStyle}" TextChanged="email_TextChanged"/>
         </StackPanel>
         <!--PasswordBox-->
-        <PasswordBox x:Name="password" Grid.Row="4" Style="{StaticResource ResourceKey=passwordBoxStyle}" PasswordChanged="password_PasswordChanged"/>
-        <TextBox x:Name="passwordSymbols" Grid.Row="4" Visibility="Hidden" Style="{StaticResource ResourceKey=textBoxStyle}" TextChanged="passwordSymbols_TextChanged"/>
-        <Button Grid.Row="4" Height="25" Width="25" Margin="0 0 30 0" HorizontalAlignment="Right" Style="{StaticResource ResourceKey=buttonStyle}" Click="showPassword_Click">
-            <materialDesign:PackIcon Kind="Eye" Width="15" Height="15" Style="{StaticResource ResourceKey=packIconStyle}"/>
+        <PasswordBox x:Name="password" Grid.Row="4" Style="{DynamicResource ResourceKey=passwordBoxStyle}" PasswordChanged="password_PasswordChanged"/>
+        <TextBox x:Name="passwordSymbols" Grid.Row="4" Visibility="Hidden" Style="{DynamicResource ResourceKey=textBoxStyle}" TextChanged="passwordSymbols_TextChanged"/>
+        <Button Grid.Row="4" Height="25" Width="25" Margin="0 0 30 0" HorizontalAlignment="Right" Style="{DynamicResource ResourceKey=buttonStyle}" Click="showPassword_Click">
+            <materialDesign:PackIcon Kind="Eye" Width="15" Height="15" Style="{DynamicResource ResourceKey=packIconStyle}"/>
         </Button>
         <!--Other-->
-        <materialDesign:PackIcon Kind="User" Grid.Row="0" Width="90" Height="90" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=packIconLoginStyle}"/>
+        <materialDesign:PackIcon Kind="User" Grid.Row="0" Width="90" Height="90" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{DynamicResource ResourceKey=packIconLoginStyle}"/>
     </Grid>
 </Window>

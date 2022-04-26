@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TimeManagement"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Completează sarcină" Height="600" Width="400" Style="{StaticResource ResourceKey=windowStyle}" ResizeMode="CanMinimize" Icon="/Icons/To-Do_icon.png">
+        Title="Completează sarcină" Height="600" Width="400" Style="{DynamicResource ResourceKey=windowStyle}" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/Icons/To-Do_icon.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -20,13 +20,13 @@
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <!--TextBlock-->
-        <TextBlock Grid.Row="0" Text="Denumire sarcină" Style="{StaticResource ResourceKey=textBlockStyle}"/>
-        <TextBlock Grid.Row="2" Text="Conținut sarcină" Style="{StaticResource ResourceKey=textBlockStyle}"/>
-        <TextBlock Grid.Row="4" Text="Început sarcină"  Style="{StaticResource ResourceKey=textBlockStyle}"/>
-        <TextBlock Grid.Row="6" Text="Sfârșit sarcină"  Style="{StaticResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="0" Text="Denumire sarcină" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="2" Text="Conținut sarcină" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="4" Text="Început sarcină"  Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="6" Text="Sfârșit sarcină"  Style="{DynamicResource ResourceKey=textBlockStyle}"/>
         <!--TextBox-->
-        <TextBox x:Name="name" Grid.Row="1" Style="{StaticResource ResourceKey=textBoxStyle}"/>
-        <TextBox x:Name="description" Grid.Row="3" Height="190" Style="{StaticResource ResourceKey=textBoxStyle}" VerticalContentAlignment="Top"/>
+        <TextBox x:Name="name" Grid.Row="1" Style="{DynamicResource ResourceKey=textBoxStyle}"/>
+        <TextBox x:Name="description" Grid.Row="3" Height="190" Style="{DynamicResource ResourceKey=textBoxStyle}" VerticalContentAlignment="Top"/>
         <!--DateTimePicker-->
         <!--Selectarea datei si orei de inceput a sarcinei-->
         <StackPanel Orientation="Horizontal" Grid.Row="5" Margin="25 0">
@@ -35,8 +35,8 @@
         </StackPanel>
         <!--Selectarea datei si orei de sfarsit a sarcinei-->
         <StackPanel Orientation="Horizontal" Grid.Row="7" Margin="25 0">
-            <DatePicker x:Name="endDatePicker" Width="210" Language="ro"/>
-            <materialDesign:TimePicker x:Name="endTimePicker" VerticalAlignment="Center" Width="100" Margin="25 0 0 0" Is24Hours="True" Language="ro"/>
+            <DatePicker x:Name="endDatePicker" Width="210" Language="ro" SelectedDateChanged="endDatePicker_SelectedDateChanged"/>
+            <materialDesign:TimePicker x:Name="endTimePicker" VerticalAlignment="Center" Width="100" Margin="25 0 0 0" Is24Hours="True" Language="ro" SelectedTimeChanged="endTimePicker_SelectedTimeChanged"/>
         </StackPanel>
         <!--Button-->
         <Grid Grid.Row="8">
@@ -44,10 +44,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="deleteButton" Grid.Column="1" Style="{StaticResource ResourceKey=buttonStyle}" Visibility="Collapsed" Width="60" Margin="0,0,25,0" Click="DeleteEventButton_Click">
+            <Button x:Name="deleteButton" Grid.Column="1" Style="{DynamicResource ResourceKey=buttonStyle}" Visibility="Collapsed" Width="60" Margin="0,0,25,0" Click="DeleteEventButton_Click">
                 <materialDesign:PackIcon Kind="Delete" Height="40" Width="40"/>
             </Button>
-            <Button x:Name="addButton" Content="Adaugă sarcină" Style="{StaticResource ResourceKey=buttonStyle}" Click="Button_Click"/>
+            <Button x:Name="addButton" Content="Adaugă sarcină" Style="{DynamicResource ResourceKey=buttonStyle}" Click="Button_Click"/>
         </Grid>
     </Grid>
 </Window>

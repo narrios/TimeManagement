@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TimeManagement"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="To Do" Height="500" Width="350" ResizeMode="CanMinimize" Icon="/Icons/To-Do_icon.png" Style="{StaticResource ResourceKey=windowStyle}">
+        Title="To Do" Height="500" Width="350" ResizeMode="CanMinimize" Icon="/Icons/To-Do_icon.png" Style="{DynamicResource ResourceKey=windowStyle}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -27,35 +27,35 @@
         <!--TextBox-->
         <StackPanel Grid.Row="1">
             <Label x:Name="errorName" Margin="0,-12,25,0" Padding="0,0,0,2" FontSize="10" Visibility="Hidden" Foreground="DarkRed" HorizontalAlignment="Right">Format nume/prenume incorect</Label>
-            <TextBox x:Name="name" Grid.Row="1" Style="{StaticResource ResourceKey=textBoxStyle}" TextChanged="Name_TextChanged"/>
+            <TextBox x:Name="name" Grid.Row="1" Style="{DynamicResource ResourceKey=textBoxStyle}" TextChanged="Name_TextChanged"/>
         </StackPanel>
         <StackPanel Grid.Row="3">
             <Label x:Name="errorEmail" Margin="0,-12,25,0" Padding="0,0,0,2" FontSize="10" Visibility="Hidden" Foreground="DarkRed" HorizontalAlignment="Right">Format email incorect</Label>
-            <TextBox x:Name="email" Grid.Row="3" Style="{StaticResource ResourceKey=textBoxStyle}" TextChanged="Email_TextChanged"/>
+            <TextBox x:Name="email" Grid.Row="3" Style="{DynamicResource ResourceKey=textBoxStyle}" TextChanged="Email_TextChanged"/>
         </StackPanel>
         <!--TextBlock-->
-        <TextBlock Grid.Row="0" Text="Nume/Prenume" Style="{StaticResource ResourceKey=textBlockStyle}"/>
-        <TextBlock Grid.Row="2" Text="Email" Style="{StaticResource ResourceKey=textBlockStyle}"/>
-        <TextBlock Grid.Row="4" Text="Parola" Style="{StaticResource ResourceKey=textBlockStyle}"/>
-        <TextBlock Grid.Row="6" Text="Repetă parola" Style="{StaticResource ResourceKey=textBlockStyle}"/>
-        <TextBlock Grid.Row="9" x:Name="link" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="ExtraLight" FontSize="14" Style="{StaticResource ResourceKey=textBlockStyle }">
+        <TextBlock Grid.Row="0" Text="Nume/Prenume" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="2" Text="Email" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="4" Text="Parola" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="6" Text="Repetă parola" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
+        <TextBlock Grid.Row="9" x:Name="link" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="ExtraLight" FontSize="14" Style="{DynamicResource ResourceKey=textBlockStyle }">
             <Hyperlink Click="GoToLog_Click">Ești înregistrat? Logare</Hyperlink>
         </TextBlock>
         <!--PasswordBox-->
         <StackPanel Grid.Row="5">
             <Label x:Name="errorPassword" Margin="0,-12,25,0" Padding="0,0,0,2" FontSize="10" Visibility="Hidden" Foreground="DarkRed" HorizontalAlignment="Right">Parolă prea scurtă</Label>
-            <PasswordBox x:Name="password" Style="{StaticResource ResourceKey=passwordBoxStyle}" PasswordChanged="Password_PasswordChanged"/>
-            <TextBox x:Name="passwordSymbols" Margin="25 -30 25 0" Visibility="Hidden" Style="{StaticResource ResourceKey=textBoxStyle}" TextChanged="passwordSymbols_TextChanged"/>
-            <Button Height="25" Width="25" Margin="0 -30 30 0" HorizontalAlignment="Right" Style="{StaticResource ResourceKey=buttonStyle}" Click="showPassword_Click">
-                <materialDesign:PackIcon Kind="Eye" Width="15" Height="15" Style="{StaticResource ResourceKey=packIconStyle}"/>
+            <PasswordBox x:Name="password" Style="{DynamicResource ResourceKey=passwordBoxStyle}" PasswordChanged="Password_PasswordChanged"/>
+            <TextBox x:Name="passwordSymbols" Margin="25 -30 25 0" Visibility="Hidden" Style="{DynamicResource ResourceKey=textBoxStyle}" TextChanged="passwordSymbols_TextChanged"/>
+            <Button Height="25" Width="25" Margin="0 -30 30 0" HorizontalAlignment="Right" Style="{DynamicResource ResourceKey=buttonStyle}" Click="showPassword_Click">
+                <materialDesign:PackIcon Kind="Eye" Width="15" Height="15" Style="{DynamicResource ResourceKey=packIconStyle}"/>
             </Button>
         </StackPanel>
         <StackPanel Grid.Row="7">
             <Label x:Name="errorConfirmPassword" Margin="0,-12,25,0" Padding="0,0,0,2" FontSize="10" Visibility="Hidden" Foreground="DarkRed" HorizontalAlignment="Right">Parolele nu coincid</Label>
-            <PasswordBox x:Name="confirmpassword" Grid.Row="7" Style="{StaticResource ResourceKey=passwordBoxStyle}" PasswordChanged="confirmPassword_PasswordChanged"/>
-            <TextBox x:Name="confirmPasswordSymbols" Margin="25 -30 25 0" Visibility="Hidden" Style="{StaticResource ResourceKey=textBoxStyle}" TextChanged="confirmPasswordSymbols_TextChanged"/>
-            <Button Height="25" Width="25" Margin="0 -30 30 0" HorizontalAlignment="Right" Style="{StaticResource ResourceKey=buttonStyle}" Click="showConfirmPassword_Click">
-                <materialDesign:PackIcon Kind="Eye" Width="15" Height="15" Style="{StaticResource ResourceKey=packIconStyle}"/>
+            <PasswordBox x:Name="confirmpassword" Grid.Row="7" Style="{DynamicResource ResourceKey=passwordBoxStyle}" PasswordChanged="confirmPassword_PasswordChanged"/>
+            <TextBox x:Name="confirmPasswordSymbols" Margin="25 -30 25 0" Visibility="Hidden" Style="{DynamicResource ResourceKey=textBoxStyle}" TextChanged="confirmPasswordSymbols_TextChanged"/>
+            <Button Height="25" Width="25" Margin="0 -30 30 0" HorizontalAlignment="Right" Style="{DynamicResource ResourceKey=buttonStyle}" Click="showConfirmPassword_Click">
+                <materialDesign:PackIcon Kind="Eye" Width="15" Height="15" Style="{DynamicResource ResourceKey=packIconStyle}"/>
             </Button>
         </StackPanel>
         <!--Button-->

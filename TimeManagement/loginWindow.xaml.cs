@@ -54,7 +54,7 @@ namespace TimeManagement
                     }
                     else
                     {
-                        LocalUser lu = new LocalUser { UserName = user.Name, Email = user.Email, Password = user.Password };
+                        LocalUser lu = new LocalUser { UserName = user.Name, Email = user.Email, Password = user.Password, UserId = user.UserId };
                         localuser.InsertOnSubmit(lu);
                         mf.DB.SubmitChanges();
                     }

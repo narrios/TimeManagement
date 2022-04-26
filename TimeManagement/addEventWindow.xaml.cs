@@ -29,7 +29,7 @@ namespace TimeManagement
                 };
                 main.levents.InsertOnSubmit(events);
                 main.mf.DB.SubmitChanges();
-                main.refreshData();
+                main.refreshDash();
                 if(main.user != null) main.syncButton.IsEnabled = true;
                 Close();
             }
