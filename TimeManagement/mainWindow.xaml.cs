@@ -50,12 +50,30 @@ namespace TimeManagement
             timer.Interval = new TimeSpan(0, setare.Timer, 0);
             timer.Tick += Timer_Tick;
             timer.Start();
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(user.UserId == mf.DB.GetTable<LocalUser>().Where(x => x.LocalUserId == 1).Single().UserId)
+            {
+                messageBox message = new messageBox("Atenție", "Doriți să faceți refresh la sarcini?", "YesNo");
+                message.buttonYes.Click += ButtonYes_Click;
+                message.ShowDialog();
+            }
+            else
+            {
+                refreshLocalDatabase();
+            }
 
-            refreshLocalDatabase();
-
+            addEndedEvents();
             refreshDashboard();
             refreshEndedEventsDashboard();
         }
+
+        private void ButtonYes_Click(object sender, RoutedEventArgs e)
+        {
+            refreshLocalDatabase();
+        }
+
         //=============================Refresh la toate tabelele din ambele baze de date=============================//
         public void refreshData()
         {
@@ -331,6 +349,8 @@ namespace TimeManagement
             refreshData();
             refreshDashboard();
             refreshEndedEventsDashboard();
+            messageBox message = new messageBox("Atenție", "A avut loc sincronizarea datelor", "Ok");
+            message.ShowDialog();
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -354,7 +374,7 @@ namespace TimeManagement
         //=============================Adaugarea unei sarcini dezvoltate la apasarea butonului respectiv=============================//
         private void expandEventButton_MouseRightClick(object sender, RoutedEventArgs e)
         {
-            expandEventWindow expand = new expandEventWindow(null)
+            expandEventWindow expand = new expandEventWindow(null, null)
             {
                 Owner = this,
             };
@@ -364,7 +384,7 @@ namespace TimeManagement
         private void updateEventButton_Click(object sender, RoutedEventArgs e)
         {
             int Id = int.Parse(((sender as Button).Content as DockPanel).Children.OfType<TextBlock>().FirstOrDefault().Text);
-            expandEventWindow updateEvent = new expandEventWindow(levents.FirstOrDefault(ev => ev.LocalEventId == Id))
+            expandEventWindow updateEvent = new expandEventWindow(levents.FirstOrDefault(ev => ev.LocalEventId == Id), leevents.FirstOrDefault(ev => ev.LocalEndedEventId == Id))
             {
                 Owner = this,
             };
@@ -373,7 +393,7 @@ namespace TimeManagement
         private void updateEventsFromCalendar_Click(object sender, RoutedEventArgs e)
         {
             int Id = int.Parse(((sender as Button).Content as DockPanel).Children.OfType<TextBlock>().FirstOrDefault().Text);
-            expandEventWindow updateEvent = new expandEventWindow(levents.FirstOrDefault(ev => ev.LocalEventId == Id))
+            expandEventWindow updateEvent = new expandEventWindow(levents.FirstOrDefault(ev => ev.LocalEventId == Id), leevents.FirstOrDefault(ev => ev.LocalEndedEventId == Id))
             {
                 Owner = this,
             };
@@ -439,6 +459,11 @@ namespace TimeManagement
             };
             settings.tabs.SelectedIndex = 1;
             settings.ShowDialog();
+        }
+        private void openAbout_Click(object sender, RoutedEventArgs e)
+        {
+            about about = new about();
+            about.ShowDialog();
         }
         private void unlogin_Click(object sender, RoutedEventArgs e)
         {

@@ -57,7 +57,7 @@
                     <StackPanel Orientation="Vertical" Margin="15" CanVerticallyScroll="True">
                         <TextBlock Text="Timer de sincronizare (minute)" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
                         <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                            <TextBox x:Name="timer" Width="300" Margin="25 0 0 0" IsEnabled="False" Style="{DynamicResource ResourceKey=MaterialDesignTextBox}"/>
+                            <TextBox x:Name="timer" Width="300" Margin="25 0 0 0" IsEnabled="False" Style="{DynamicResource ResourceKey=MaterialDesignTextBox}" TextChanged="timer_TextChanged"/>
                             <Button x:Name="modifyTimer" Click="modifyTimer_Click" Width="35" Height="35" Style="{DynamicResource ResourceKey=buttonStyle}">
                                 <materialDesign:PackIcon Kind="Pen"/>
                             </Button>
@@ -67,7 +67,7 @@
                         </StackPanel>
                         <TextBlock Text="La câte zile vor fi afișate evenimentele pe dashboard" Margin="25 5 0 0" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
                         <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                            <TextBox x:Name="endOn" Width="300" Margin="25 0 0 0" IsEnabled="False" Style="{DynamicResource ResourceKey=MaterialDesignTextBox}"/>
+                            <TextBox x:Name="endOn" Width="300" Margin="25 0 0 0" IsEnabled="False" Style="{DynamicResource ResourceKey=MaterialDesignTextBox}" TextChanged="endOn_TextChanged"/>
                             <Button x:Name="modifyEnd" Click="modifyEnd_Click" Width="35" Height="35" Style="{DynamicResource ResourceKey=buttonStyle}">
                                 <materialDesign:PackIcon Kind="Pen"/>
                             </Button>

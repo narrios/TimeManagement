@@ -10,7 +10,8 @@ namespace TimeManagement
     public partial class expandEventWindow : Window
     {
         LocalEvents updateEvent;
-        public expandEventWindow(LocalEvents e)
+        LocalEndedEvents localEndedEvent;
+        public expandEventWindow(LocalEvents e, LocalEndedEvents ee)
         {
             InitializeComponent();
             if (e != null)
@@ -28,6 +29,28 @@ namespace TimeManagement
                 addButton.Content = "Adaugă detalii sarcină";
                 deleteButton.Visibility = Visibility.Visible;
             }
+            else if(ee != null)
+            {
+                updateEvent = new LocalEvents()
+                {
+                    EventName = ee.EventName,
+                    EventDescription = ee.EventDescription,
+                    EventStart = ee.EventStart,
+                    EventEnd = ee.EventEnd,
+                };
+                localEndedEvent = ee;
+                name.Text = ee.EventName;
+                description.Text = ee.EventDescription;
+                if (ee.EventStart != null)
+                {
+                    startDatePicker.SelectedDate = ee.EventStart.Value.Date;
+                    endDatePicker.SelectedDate = ee.EventEnd.Value.Date;
+                    startTimePicker.SelectedTime = ee.EventStart.Value;
+                    endTimePicker.SelectedTime = ee.EventEnd.Value;
+                }
+                addButton.Content = "Adaugă detalii sarcină";
+                deleteButton.Visibility = Visibility.Visible;
+            }
             else
             {
                 startDatePicker.SelectedDate = DateTime.Now;
@@ -40,12 +63,12 @@ namespace TimeManagement
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             mainWindow main = Owner as mainWindow;
-            if(endDatePicker.SelectedDate < DateTime.Now)
+            if(endDatePicker.SelectedDate < DateTime.Now.Date)
             {
                 messageBox message = new messageBox("Atenție", "Nu puteți crea o sarcină cu termenul deja finalizat", "Ok");
                 message.ShowDialog();
             }
-            else if (name.Text != "" && description.Text != "" && startDatePicker.SelectedDate != null && startTimePicker.SelectedTime != null && endDatePicker.SelectedDate != null && endDatePicker.SelectedDate >= DateTime.Now && endTimePicker.SelectedTime != null)
+            else if (name.Text != "" && description.Text != "" )
             {
                 DateTime d1 = startDatePicker.SelectedDate.Value.Add(startTimePicker.SelectedTime.Value.TimeOfDay);
                 DateTime d2 = endDatePicker.SelectedDate.Value.Add(endTimePicker.SelectedTime.Value.TimeOfDay);
@@ -63,15 +86,19 @@ namespace TimeManagement
                 }
                 else
                 {
-                    string time1 = d1.ToString().Substring(0, d1.ToString().Length - 3);
-                    string time2 = d2.ToString().Substring(0, d2.ToString().Length - 3);
                     updateEvent.EventName = name.Text;
                     updateEvent.EventDescription = description.Text;
                     updateEvent.EventStart = d1;
                     updateEvent.EventEnd = d2;
+                    if(localEndedEvent != null)
+                    {
+                        main.leevents.DeleteOnSubmit(localEndedEvent);
+                        main.levents.InsertOnSubmit(updateEvent);
+                    }
                     main.mf.DB.SubmitChanges();
                 }
                 if (main.user != null) main.syncButton.IsEnabled = true;
+                main.refreshCalendarEvents();
                 main.refreshDash();
                 Close();
             }
@@ -79,10 +106,20 @@ namespace TimeManagement
         private void DeleteEventButton_Click(object sender, RoutedEventArgs e)
         {
             mainWindow main = Owner as mainWindow;
-            main.levents.DeleteOnSubmit(updateEvent);
+            if(updateEvent != null && localEndedEvent == null)
+            {
+                main.levents.DeleteOnSubmit(updateEvent);
+            }
+            else
+            {
+                main.leevents.DeleteOnSubmit(localEndedEvent);
+            }
             main.mf.DB.SubmitChanges();
             if (main.user != null) main.syncButton.IsEnabled = true;
             main.refreshDash();
+            main.refreshCalendarEvents();
+            messageBox message = new messageBox("Succes", "Sarcina " + name.Text + " a fost ștearsă cu succes!", "Ok");
+            message.ShowDialog();
             Close();
         }
 

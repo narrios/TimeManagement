@@ -8,8 +8,8 @@
         Title="" Icon="/Icons/To-Do_icon.png" Height="200" Width="400" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Style="{DynamicResource ResourceKey=windowStyle}">
     <Grid>
         <TextBlock x:Name="message" Text="" HorizontalAlignment="Stretch" VerticalAlignment="Top" TextAlignment="Center" MaxHeight="100" Margin="55 25 55 0" FontWeight="Normal" TextWrapping="Wrap" Style="{DynamicResource ResourceKey=textBlockStyle}"/>
-        <Button x:Name="buttonYes" Content="Yes" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="40" Width="120" Margin="50 0 50 25" Style="{DynamicResource ResourceKey=buttonStyle}" Click="buttonYes_Click"/>
-        <Button x:Name="buttonNo" Content="No" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="40" Width="120" Margin="50 0 50 25" Style="{DynamicResource ResourceKey=buttonStyle}" Click="buttonNo_Click"/>
+        <Button x:Name="buttonYes" Content="Da" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="40" Width="120" Margin="50 0 50 25" Style="{DynamicResource ResourceKey=buttonStyle}" Click="buttonYes_Click"/>
+        <Button x:Name="buttonNo" Content="Nu" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="40" Width="120" Margin="50 0 50 25" Style="{DynamicResource ResourceKey=buttonStyle}" Click="buttonNo_Click"/>
         <Button x:Name="buttonOk" Content="Ok" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Hidden" Height="40" Width="300" Margin="0 0 0 25" Style="{DynamicResource ResourceKey=buttonStyle}" Click="buttonOk_Click"/>
     </Grid>
 </Window>

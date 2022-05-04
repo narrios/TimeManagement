@@ -37,3 +37,5 @@ C:\Users\voron\Desktop\TimeManagement\TimeManagement\obj\Debug\addEventWindow.ba
 C:\Users\voron\Desktop\TimeManagement\TimeManagement\obj\Debug\expandEventWindow.baml
 C:\Users\voron\Desktop\TimeManagement\TimeManagement\obj\Debug\messageBox.g.cs
 C:\Users\voron\Desktop\TimeManagement\TimeManagement\obj\Debug\messageBox.baml
+C:\Users\voron\Desktop\TimeManagement\TimeManagement\obj\Debug\about.g.cs
+C:\Users\voron\Desktop\TimeManagement\TimeManagement\obj\Debug\about.baml

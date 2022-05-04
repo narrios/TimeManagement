@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TimeManagement"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="To Do" Height="600" Width="1000" MinHeight="600" MinWidth="600" Icon="/Icons/To-Do_icon.png" WindowStartupLocation="CenterScreen" Style="{DynamicResource ResourceKey=windowStyle}" Closing="onClose">
+        Title="To Do" Height="600" Width="1000" MinHeight="600" MinWidth="600" Icon="/Icons/To-Do_icon.png" WindowStartupLocation="CenterScreen" Style="{DynamicResource ResourceKey=windowStyle}" Loaded="Window_Loaded" Closing="onClose">
 
     <Window.Resources>
         <Storyboard x:Key="MenuOpen">
@@ -62,7 +62,7 @@
             </DataTemplate.Triggers>
         </DataTemplate>
         <DataTemplate x:Key="endedEventsTemplate">
-            <Button Style="{DynamicResource ResourceKey=dashButtonStyle}">
+            <Button Style="{DynamicResource ResourceKey=dashButtonStyle}" Click="updateEventButton_Click">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" Margin="0 0 10 5" HorizontalAlignment="Right" x:Name="timeToShow">
                         <TextBlock DockPanel.Dock="Right" Text="{Binding Path=End}" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}"/>
@@ -76,6 +76,7 @@
                             <TextBlock FontSize="12" VerticalAlignment="Center" FontWeight="DemiBold" Style="{DynamicResource ResourceKey=dashTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Description}"/>
                         </StackPanel>
                     </StackPanel>
+                    <TextBlock Visibility="Collapsed" Text="{Binding Path=Id}"/>
                 </DockPanel>
             </Button>
             <DataTemplate.Triggers>
@@ -194,7 +195,7 @@
                     <StackPanel Width="150">
                         <Button Content="Account" Click="openAccount_Click"/>
                         <Button Content="Setări" Click="openSettings_Click"/>
-                        <Button Content="Despre"/>
+                        <Button Content="Despre" Click="openAbout_Click"/>
                         <Separator/>
                         <Button Content="Delogare" Click="unlogin_Click"/>
                     </StackPanel>

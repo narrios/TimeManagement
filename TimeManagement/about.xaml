@@ -1,0 +1,15 @@
+﻿<Window x:Class="TimeManagement.about"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeManagement"
+        mc:Ignorable="d"
+        Title="Despre" Height="250" Width="400" Icon="/Icons/To-Do_icon.png" ResizeMode="CanMinimize" Style="{DynamicResource ResourceKey=windowStyle}">
+    <Grid>
+        <TextBlock Margin="25" VerticalAlignment="Top" FontSize="14" FontWeight="DemiBold" TextWrapping="Wrap" TextAlignment="Justify" Style="{DynamicResource ResourceKey=textBlockStyle}">
+            Aplicația „ToDo” elaborată ca temă a lucrării de diplomă în anul de studiu 2021-2022 în cadrul Instituției Publice „Centrul de Excelență în Economie și Finanțe”
+            de către Voroniuc Maxim, student în grupa „PAP1813G”, ghidat în această lucrare fiind de domnul Zatîca Alexandru.
+        </TextBlock>
+    </Grid>
+</Window>

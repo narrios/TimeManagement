@@ -50,7 +50,8 @@ namespace TimeManagement
                 utilizatori.InsertOnSubmit(user);
                 mf.MainDB.SubmitChanges();
                 this.Close();
-                MessageBox.Show(this, "Utilizatorul a fost creat cu succes!", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
+                messageBox message = new messageBox("Succes", "Utilizatorul a fost creat cu succes!", "Ok");
+                message.ShowDialog();
             }
         }
         //Numele

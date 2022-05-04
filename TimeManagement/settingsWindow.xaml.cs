@@ -99,6 +99,17 @@ namespace TimeManagement
             timer.IsEnabled = true;
             applyTimer.IsEnabled = true;
         }
+        private void timer_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (timer.Text != "")
+            {
+                if (timer.Text[timer.Text.Length - 1] != '1' && timer.Text[timer.Text.Length - 1] != '2' && timer.Text[timer.Text.Length - 1] != '3' && timer.Text[timer.Text.Length - 1] != '4' && timer.Text[timer.Text.Length - 1] != '5' && timer.Text[timer.Text.Length - 1] != '6' && timer.Text[timer.Text.Length - 1] != '7' && timer.Text[timer.Text.Length - 1] != '8' && timer.Text[timer.Text.Length - 1] != '9' && timer.Text[timer.Text.Length - 1] != '0')
+                {
+                    timer.Text = timer.Text.Remove(timer.Text.Length - 1);
+                    timer.Select(timer.Text.Length, 0);
+                }
+            }
+        }
         private void applyTimer_Click(object sender, RoutedEventArgs e)
         {
             mainWindow main = Owner as mainWindow;
@@ -108,12 +119,25 @@ namespace TimeManagement
             applyTimer.IsEnabled = false;
             main.setare = setare;
             mf.DB.SubmitChanges();
+            messageBox message = new messageBox("Atenție", "Setările timer-ului au fost modificate", "Ok");
+            message.ShowDialog();
         }
         //Modificarea setarilor distantei de afisare a sarcinilor
         private void modifyEnd_Click(object sender, RoutedEventArgs e)
         {
             endOn.IsEnabled = true;
             applyEnd.IsEnabled = true;
+        }
+        private void endOn_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (endOn.Text != "")
+            {
+                if (endOn.Text[endOn.Text.Length - 1] != '1' && endOn.Text[endOn.Text.Length - 1] != '2' && timer.Text[endOn.Text.Length - 1] != '3' && endOn.Text[endOn.Text.Length - 1] != '4' && endOn.Text[endOn.Text.Length - 1] != '5' && endOn.Text[endOn.Text.Length - 1] != '6' && endOn.Text[endOn.Text.Length - 1] != '7' && endOn.Text[endOn.Text.Length - 1] != '8' && endOn.Text[endOn.Text.Length - 1] != '9' && endOn.Text[endOn.Text.Length - 1] != '0')
+                {
+                    endOn.Text = endOn.Text.Remove(endOn.Text.Length - 1);
+                    endOn.Select(endOn.Text.Length, 0);
+                }
+            }
         }
         private void applyEnd_Click(object sender, RoutedEventArgs e)
         {
@@ -124,6 +148,8 @@ namespace TimeManagement
             applyEnd.IsEnabled = false;
             main.setare = setare;
             mf.DB.SubmitChanges();
+            messageBox message = new messageBox("Atenție", "Setările distanței de afișare a sarcinilor au fost modificate", "Ok");
+            message.ShowDialog();
         }
         //Modificarea temei
         private void theme_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -136,7 +162,8 @@ namespace TimeManagement
             applyTheme.IsEnabled = false;
             mf.DB.SubmitChanges();
             mf.changeTheme(setare);
+            messageBox message = new messageBox("Atenție", "Tema a fost schimbată", "Ok");
+            message.ShowDialog();
         }
-
     }
 }
