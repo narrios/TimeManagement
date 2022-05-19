@@ -29,9 +29,9 @@ namespace TimeManagement.Classes
             [Column]
             public string EventDescription { get; set; }
             [Column]
-            public Nullable<DateTime> EventStart { get; set; }
+            public DateTime? EventStart { get; set; }
             [Column]
-            public Nullable<DateTime> EventEnd { get; set; }
+            public DateTime? EventEnd { get; set; }
             [Column]
             public int UserId { get; set; }
         }
@@ -46,9 +46,9 @@ namespace TimeManagement.Classes
             [Column]
             public string EventDescription { get; set; }
             [Column]
-            public Nullable<DateTime> EventStart { get; set; }
+            public DateTime? EventStart { get; set; }
             [Column]
-            public Nullable<DateTime> EventEnd { get; set; }
+            public DateTime? EventEnd { get; set; }
             [Column]
             public int UserId { get; set; }
         }

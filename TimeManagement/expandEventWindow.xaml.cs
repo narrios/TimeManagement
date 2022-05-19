@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using System.Linq;
+using System.Data.Linq;
 using TimeManagement.Classes;
 
 namespace TimeManagement
@@ -11,6 +13,7 @@ namespace TimeManagement
     {
         LocalEvents updateEvent;
         LocalEndedEvents localEndedEvent;
+        DateTime? d1, d2;
         public expandEventWindow(LocalEvents e, LocalEndedEvents ee)
         {
             InitializeComponent();
@@ -26,8 +29,9 @@ namespace TimeManagement
                     startTimePicker.SelectedTime = e.EventStart.Value;
                     endTimePicker.SelectedTime = e.EventEnd.Value;
                 }
-                addButton.Content = "Adaugă detalii sarcină";
+                addButton.Content = "Adaugă detalii";
                 deleteButton.Visibility = Visibility.Visible;
+                endButton.Visibility = Visibility.Visible;
             }
             else if(ee != null)
             {
@@ -48,7 +52,7 @@ namespace TimeManagement
                     startTimePicker.SelectedTime = ee.EventStart.Value;
                     endTimePicker.SelectedTime = ee.EventEnd.Value;
                 }
-                addButton.Content = "Adaugă detalii sarcină";
+                addButton.Content = "Adaugă detalii";
                 deleteButton.Visibility = Visibility.Visible;
             }
             else
@@ -68,10 +72,24 @@ namespace TimeManagement
                 messageBox message = new messageBox("Atenție", "Nu puteți crea o sarcină cu termenul deja finalizat", "Ok");
                 message.ShowDialog();
             }
+            else if(name.Text == "")
+            {
+                messageBox message = new messageBox("Atenție", "Nu puteți crea o sarcină fără denumire", "Ok");
+                message.ShowDialog();
+            }
+            else if (description.Text == "")
+            {
+                messageBox message = new messageBox("Atenție", "Nu puteți crea o sarcină fără descriere", "Ok");
+                message.ShowDialog();
+            }
             else if (name.Text != "" && description.Text != "" )
             {
-                DateTime d1 = startDatePicker.SelectedDate.Value.Add(startTimePicker.SelectedTime.Value.TimeOfDay);
-                DateTime d2 = endDatePicker.SelectedDate.Value.Add(endTimePicker.SelectedTime.Value.TimeOfDay);
+                if(startDatePicker.SelectedDate != null && startTimePicker.SelectedTime != null && endDatePicker.SelectedDate != null && endTimePicker.SelectedTime != null)
+                {
+                    d1 = startDatePicker.SelectedDate.Value.Add(startTimePicker.SelectedTime.Value.TimeOfDay);
+                    d2 = endDatePicker.SelectedDate.Value.Add(endTimePicker.SelectedTime.Value.TimeOfDay);
+                }
+                
                 if (updateEvent == null)
                 {
                     LocalEvents newEvent = new LocalEvents()
@@ -82,7 +100,8 @@ namespace TimeManagement
                         EventEnd = d2,
                     };
                     main.levents.InsertOnSubmit(newEvent);
-                    main.mf.DB.SubmitChanges();
+                    messageBox message = new messageBox("Atenție", "Sarcina " + name.Text + " a fost adăugată cu succes!", "Ok");
+                    message.ShowDialog();
                 }
                 else
                 {
@@ -95,11 +114,15 @@ namespace TimeManagement
                         main.leevents.DeleteOnSubmit(localEndedEvent);
                         main.levents.InsertOnSubmit(updateEvent);
                     }
-                    main.mf.DB.SubmitChanges();
+                    messageBox message = new messageBox("Atenție", "Sarcina " + name.Text + " a fost actualizată cu succes!", "Ok");
+                    message.ShowDialog();
                 }
+                main.mf.DB.SubmitChanges();
+
                 if (main.user != null) main.syncButton.IsEnabled = true;
                 main.refreshCalendarEvents();
                 main.refreshDash();
+                
                 Close();
             }
         }
@@ -118,11 +141,36 @@ namespace TimeManagement
             if (main.user != null) main.syncButton.IsEnabled = true;
             main.refreshDash();
             main.refreshCalendarEvents();
-            messageBox message = new messageBox("Succes", "Sarcina " + name.Text + " a fost ștearsă cu succes!", "Ok");
+            messageBox message = new messageBox("Atenție", "Sarcina " + name.Text + " a fost ștearsă cu succes!", "Ok");
             message.ShowDialog();
             Close();
         }
+        private void endButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow main = Owner as mainWindow;
 
+            if (updateEvent != null && localEndedEvent == null)
+            {
+                main.levents.DeleteOnSubmit(updateEvent);
+
+                LocalEndedEvents ev = new LocalEndedEvents
+                {
+                    EventName = updateEvent.EventName,
+                    EventDescription = updateEvent.EventDescription,
+                    EventStart = updateEvent.EventStart,
+                    EventEnd = updateEvent.EventEnd,
+                };
+                main.leevents.InsertOnSubmit(ev);
+                main.mf.DB.SubmitChanges();
+
+                main.refreshDash();
+                main.syncButton.IsEnabled = true;
+
+                messageBox message = new messageBox("Atenție", "Sarcina " + name.Text + " a fost finalizată!", "Ok");
+                message.ShowDialog();
+                Close();
+            }
+        }
         private void endDatePicker_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if(startDatePicker.SelectedDate > endDatePicker.SelectedDate) startDatePicker.SelectedDate = endDatePicker.SelectedDate;

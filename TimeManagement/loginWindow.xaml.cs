@@ -37,8 +37,7 @@ namespace TimeManagement
         private void login_Click(object sender, RoutedEventArgs e)
         {
             startWindow start = Owner as startWindow;
-
-            DB.Users user = (from ev in utilizatori where ev.Email == email.Text && ev.Password == password.Password select ev).First();
+            DB.Users user = (from ev in utilizatori where ev.Email == email.Text && ev.Password == password.Password select ev).FirstOrDefault();
             if (user != null)
             {
                 main = new mainWindow(user);

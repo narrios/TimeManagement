@@ -10,11 +10,11 @@ none
 false
 TRACE
 C:\Users\voron\Desktop\TimeManagement\TimeManagement\App.xaml
-9-1937508106
+11-101236721
 
-15-2125347135
+172073499968
 161756349624
-addEventWindow.xaml;expandEventWindow.xaml;loginWindow.xaml;mainWindow.xaml;settingsWindow.xaml;signupWindow.xaml;startWindow.xaml;Themes\dark.xaml;Themes\light.xaml;
+about.xaml;addEventWindow.xaml;expandEventWindow.xaml;loginWindow.xaml;mainWindow.xaml;messageBox.xaml;settingsWindow.xaml;signupWindow.xaml;startWindow.xaml;Themes\dark.xaml;Themes\light.xaml;
 
-True
+False
 

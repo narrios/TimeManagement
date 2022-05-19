@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Linq;
@@ -20,7 +21,7 @@ namespace TimeManagement
         public ObservableCollection<DisplayEvent> displayEndedEvents = new ObservableCollection<DisplayEvent>();
         public ObservableCollection<DisplayEvent> calendarEvents = new ObservableCollection<DisplayEvent>();
 
-        Nullable<DateTime> calSelectedMaxValue, calSelectedMinValue;
+        DateTime? calSelectedMaxValue, calSelectedMinValue;
 
         public mainFunctions mf = new mainFunctions();
         public Table<DB.Events> events;
@@ -53,11 +54,14 @@ namespace TimeManagement
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if(user.UserId == mf.DB.GetTable<LocalUser>().Where(x => x.LocalUserId == 1).Single().UserId)
+            if(user != null)
             {
-                messageBox message = new messageBox("Atenție", "Doriți să faceți refresh la sarcini?", "YesNo");
-                message.buttonYes.Click += ButtonYes_Click;
-                message.ShowDialog();
+                if (user.UserId == mf.DB.GetTable<LocalUser>().Where(x => x.LocalUserId == 1).FirstOrDefault().UserId)
+                {
+                    messageBox message = new messageBox("Atenție", "Doriți să faceți refresh la sarcini?", "YesNo");
+                    message.buttonYes.Click += ButtonYes_Click;
+                    message.ShowDialog();
+                }
             }
             else
             {
@@ -237,6 +241,9 @@ namespace TimeManagement
                 mf.MainDB.SubmitChanges();
                 syncButton.IsEnabled = false;
             }
+            refreshLocalDatabase();
+            refreshDashboard();
+            refreshEndedEventsDashboard();
         }
         //=============================Refresh la sarcinile din tabelul cu sarcini=============================//
         public void refreshDashboard()
@@ -272,13 +279,17 @@ namespace TimeManagement
         {
             refreshData();
             displayEndedEvents.Clear();
-            List<LocalEndedEvents> Events3Days = leevents.Where(e => e.EventEnd <= DateTime.Now.AddDays(setare.EndOn) || e.EventEnd == null).ToList();
+            List<LocalEndedEvents> Events3Days = leevents.ToList();
             foreach (LocalEndedEvents e in Events3Days)
             {
+                bool show = e.EventStart != null;
                 string time1 = "", time2 = "";
 
-                time1 = e.EventStart.ToString().Substring(0, e.EventStart.ToString().Length - 3);
-                time2 = e.EventEnd.ToString().Substring(0, e.EventEnd.ToString().Length - 3);
+                if (e.EventStart != null)
+                {
+                    time1 = e.EventStart.ToString().Substring(0, e.EventStart.ToString().Length - 3);
+                    time2 = e.EventEnd.ToString().Substring(0, e.EventEnd.ToString().Length - 3);
+                }
                 displayEndedEvents.Add(new DisplayEvent
                 {
                     Id = e.LocalEndedEventId,
@@ -286,10 +297,11 @@ namespace TimeManagement
                     Description = e.EventDescription,
                     Start = time1,
                     End = time2,
-                    ShowTime = true,
+                    ShowTime = show,
                 });
             }
-            timeEvents1.ItemsSource = null;
+            justEvents1.ItemsSource = timeEvents1.ItemsSource = null;
+            justEvents1.ItemsSource = displayEndedEvents.Where(e => !e.ShowTime);
             timeEvents1.ItemsSource = displayEndedEvents.Where(e => e.ShowTime);
         }
         //=============================Refresh la sarcinile din calendar=============================//
@@ -345,22 +357,35 @@ namespace TimeManagement
         //=============================Sincronizarea la apasarea butonului respectiv=============================//
         private void sync_Click(object sender, RoutedEventArgs e)
         {
-            sync();
-            refreshData();
-            refreshDashboard();
-            refreshEndedEventsDashboard();
-            messageBox message = new messageBox("Atenție", "A avut loc sincronizarea datelor", "Ok");
-            message.ShowDialog();
-        }
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            if(syncButton.IsEnabled == true)
+            if(mf.CheckForInternetConnection() != false)
             {
                 sync();
                 refreshData();
                 refreshDashboard();
                 refreshEndedEventsDashboard();
-            }  
+                messageBox message = new messageBox("Atenție", "A avut loc sincronizarea datelor", "Ok");
+                message.ShowDialog();
+            }
+            else
+            {
+                messageBox message = new messageBox("Atenție", "Din cauza problemelor cu rețeaua sarcinile nu pot fi sincronizate", "Ok");
+                message.ShowDialog();
+            }
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if(mf.CheckForInternetConnection() != false)
+            {
+                sync();
+                refreshData();
+                refreshDashboard();
+                refreshEndedEventsDashboard();
+            }
+            else
+            {
+                messageBox message = new messageBox("Atenție", "Din cauza problemelor cu rețeaua sarcinile nu pot fi sincronizate", "Ok");
+                message.ShowDialog();
+            }
         }
         //=============================Adaugarea unei sarcini simple la apasarea butonului respectiv=============================//
         private void addEventButton_Click(object sender, RoutedEventArgs e)
@@ -480,7 +505,7 @@ namespace TimeManagement
         }
         private void onClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(user != null) sync();
+            if (user != null && mf.CheckForInternetConnection() != false) sync();
         }
     }
 }

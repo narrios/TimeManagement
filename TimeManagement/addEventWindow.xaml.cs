@@ -16,8 +16,16 @@ namespace TimeManagement
         private void addEvent_Click(object sender, RoutedEventArgs e)
         {
             mainWindow main = Owner as mainWindow;
-            if (name.Text == "") MessageBox.Show("Nu este introdusă denumirea sarcinii", "Atenție", MessageBoxButton.OK, MessageBoxImage.Warning);
-            else if (description.Text == "") MessageBox.Show("Nu este introdusă descrierea sarcinii", "Atenție", MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (name.Text == "")
+            {
+                messageBox message = new messageBox("Atenție", "Nu puteți crea o sarcină fără denumire", "Ok");
+                message.ShowDialog();
+            }
+            else if (description.Text == "")
+            {
+                messageBox message = new messageBox("Atenție", "Nu puteți crea o sarcină fără descriere", "Ok");
+                message.ShowDialog();
+            }
             else
             {
                 events = new LocalEvents()
@@ -31,6 +39,8 @@ namespace TimeManagement
                 main.mf.DB.SubmitChanges();
                 main.refreshDash();
                 if(main.user != null) main.syncButton.IsEnabled = true;
+                messageBox message = new messageBox("Atenție", "Sarcina " + name.Text + " a fost adăugată cu succes!", "Ok");
+                message.ShowDialog();
                 Close();
             }
         }

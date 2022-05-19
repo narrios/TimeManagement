@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Windows;
@@ -25,16 +26,19 @@ namespace TimeManagement
 
             mf.changeTheme(setare);
 
-            if(user != null && (mf.MainDB.GetTable<DB.Users>()) != null)
+            if(mf.CheckForInternetConnection() != false)
             {
-                if (user.UserName != ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Name)
+                if (user != null)
                 {
-                    user.UserName = ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Name;
-                }
-                if (user != null && user.Email == ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Email && user.Password == ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Password)
-                {
-                    fastLog.Text = "Intră ca " + user.UserName;
-                    fastLogButton.IsEnabled = true;
+                    if (user.UserName != (mf.MainDB.GetTable<DB.Users>().Where(x => x.UserId == user.UserId)).FirstOrDefault().Name)
+                    {
+                        user.UserName = (mf.MainDB.GetTable<DB.Users>().Where(x => x.UserId == user.UserId)).FirstOrDefault().Name;
+                    }
+                    if (user != null && user.Email == ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Email && user.Password == ((mf.MainDB.GetTable<DB.Users>()).Where(x => x.UserId == user.UserId)).First().Password)
+                    {
+                        fastLog.Text = "Intră ca " + user.UserName;
+                        fastLogButton.IsEnabled = true;
+                    }
                 }
                 else
                 {
@@ -42,6 +46,16 @@ namespace TimeManagement
                     fastLogButton.IsEnabled = false;
                 }
             }
+            else
+            {
+                messageBox message = new messageBox("Atenție", "La moment nu aveți acces la rețea", "Ok");
+                message.ShowDialog();
+                
+                log_BTN.IsEnabled = false;
+                sign_BTN.IsEnabled = false;
+            }
+            
+            
         }
         private void login_Click(object sender, RoutedEventArgs e)
         {
@@ -63,18 +77,13 @@ namespace TimeManagement
 
         private void fastLog_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                DB.Users User = (from ev in (mf.MainDB.GetTable<DB.Users>()) where ev.Email == user.Email && ev.Password == user.Password select ev).FirstOrDefault();
-                mainWindow main = new mainWindow(User);
-                Close();
-                main.Show();
-            }
-            catch(Exception)
-            {
-                messageBox message = new messageBox("Atenție", "La moment nu aveți acces la rețea", "Ok");
-                message.ShowDialog();
-            }
+            DB.Users User = (from ev in (mf.MainDB.GetTable<DB.Users>()) where ev.Email == user.Email && ev.Password == user.Password select ev).FirstOrDefault();
+            mainWindow main = new mainWindow(User);
+            mf.MainDB.Connection.Close();
+            mf.MainDB = null;
+            Close();
+            main.Show();
+            
         }
 
         private void guest_Click(object sender, RoutedEventArgs e)

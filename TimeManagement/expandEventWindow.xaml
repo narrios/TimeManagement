@@ -43,11 +43,15 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="deleteButton" Grid.Column="1" Style="{DynamicResource ResourceKey=buttonStyle}" Visibility="Collapsed" Width="60" Margin="0,0,25,0" Click="DeleteEventButton_Click">
+            <Button x:Name="deleteButton" ToolTip="Șterge sarcina" Grid.Column="2" Style="{DynamicResource ResourceKey=buttonStyle}" Visibility="Collapsed" Width="60" Margin="0,0,25,0" Click="DeleteEventButton_Click">
                 <materialDesign:PackIcon Kind="Delete" Height="40" Width="40"/>
             </Button>
-            <Button x:Name="addButton" Content="Adaugă sarcină" Style="{DynamicResource ResourceKey=buttonStyle}" Click="Button_Click"/>
+            <Button x:Name="endButton" ToolTip="Marchează sarcina ca finalizată" Grid.Column="1" Style="{DynamicResource ResourceKey=buttonStyle}" Visibility="Collapsed" Width="60" Margin="0,0,25,0" Click="endButton_Click">
+                <materialDesign:PackIcon Kind="Clock" Height="40" Width="40"/>
+            </Button>
+            <Button x:Name="addButton" Content="Adaugă sarcină" Grid.Column="0" Style="{DynamicResource ResourceKey=buttonStyle}" Click="Button_Click"/>
         </Grid>
     </Grid>
 </Window>
